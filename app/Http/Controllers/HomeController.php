@@ -12,55 +12,45 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil data banner
+        // Ambil banner aktif
         $banners = Banner::where('is_active', true)
-            ->orderBy('order')
+            ->latest()
             ->get();
 
-        // UNCOMMENT BARIS INI UNTUK DEBUG DATA BANNER
-        // dd($banners->toArray());
-
-        // Format ulang banner untuk memastikan image path benar
+        // Format path banner
         $banners = $banners->map(function ($banner) {
-            if ($banner->image) {
-                $banner->image_url = asset('storage/' . $banner->image);
-                // Cek apakah file ada
-                $banner->image_exists = file_exists(storage_path('app/public/' . $banner->image));
-            } else {
-                $banner->image_url = null;
-                $banner->image_exists = false;
-            }
+            $imagePath = $banner->image;
+            $imagePath = str_replace(['public/', 'storage/', '\\'], '/', $imagePath);
+            $imagePath = ltrim($imagePath, '/');
+            $banner->image = $imagePath;
             return $banner;
         });
 
-        $nowPlaying = Film::with('category')
-            ->where('status', 'now_playing')
+        // Ambil film now playing
+        $nowPlaying = Film::where('status', 'now_playing')
             ->latest()
             ->take(8)
             ->get();
 
-        $comingSoon = Film::with('category')
-            ->where('status', 'coming_soon')
+        // 🔥 TAMBAHKAN: Ambil film coming soon
+        $comingSoon = Film::where('status', 'coming_soon')
+            ->orWhere(function ($query) {
+                $query->where('release_date', '>', now())
+                    ->where('status', '!=', 'now_playing');
+            })
             ->latest()
-            ->take(8)
+            ->take(10)
             ->get();
 
+        // Ambil cinema (tanpa filter is_active)
         $cinemas = Cinema::take(6)->get();
 
-        $promos = [
-            [
-                'title' => 'Student Discount',
-                'description' => 'Dapatkan diskon 20% dengan kartu pelajar',
-                'image' => 'https://via.placeholder.com/300x200?text=Student+Discount',
-            ],
-            [
-                'title' => 'Weekend Special',
-                'description' => 'Tiket weekend spesial Rp35.000',
-                'image' => 'https://via.placeholder.com/300x200?text=Weekend+Special',
-            ],
-        ];
-
-        return view('home', compact('banners', 'nowPlaying', 'comingSoon', 'cinemas', 'promos'));
+        return view('home', compact(
+            'banners',
+            'nowPlaying',
+            'comingSoon',  // 🔥 DITAMBAHKAN
+            'cinemas'
+        ));
     }
 
     public function film($slug)

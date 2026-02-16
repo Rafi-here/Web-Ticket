@@ -13,14 +13,29 @@ use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-    public function showPayment($showtimeId)
+    /**
+     * Menampilkan halaman pembayaran
+     * Dari halaman detail film: route('payment.show', $showtime) + ?qty={jumlah}
+     */
+    public function showPayment(Request $request, $showtimeId)
     {
         $showtime = Showtime::with(['film', 'cinema'])->findOrFail($showtimeId);
 
-        // Generate seat layout
+        // Ambil jumlah tiket dari query string
+        $qty = $request->query('qty', 1);
+
+        // Validasi jumlah tiket
+        if ($qty < 1 || $qty > $showtime->available_seats) {
+            return redirect()->back()->with('error', 'Jumlah tiket tidak valid');
+        }
+
+        // Generate seat layout (untuk pemilihan kursi)
         $seats = $this->generateSeats($showtime);
 
-        return view('payment', compact('showtime', 'seats'));
+        // Hitung total harga sementara
+        $totalPrice = $showtime->price * $qty;
+
+        return view('payment.show', compact('showtime', 'qty', 'seats', 'totalPrice'));
     }
 
     public function processPayment(Request $request)
@@ -31,7 +46,7 @@ class PaymentController extends Controller
             'quantity' => 'required|integer|min:1',
             'total_price' => 'required|numeric',
             'payment_method' => 'required|in:ewallet,virtual_account,qris,transfer_bank',
-            'provider' => 'required_if:payment_method,ewallet,virtual_account,transfer_bank',
+            'provider' => 'required',
         ]);
 
         try {
@@ -61,11 +76,14 @@ class PaymentController extends Controller
                 'quantity' => $request->quantity,
                 'total_price' => $request->total_price,
                 'payment_method' => $request->payment_method,
+                'provider' => $request->provider,
                 'status' => 'pending',
+                'booking_code' => strtoupper(Str::random(8)),
+                'expired_at' => now()->addHours(24),
             ]);
 
             // Generate QR Code
-            $qrCode = $this->generateQRCode($ticket->ticket_code);
+            $qrCode = $this->generateQRCode($ticket->booking_code);
             $ticket->update(['qr_code' => $qrCode]);
 
             // Create payment record
@@ -86,8 +104,9 @@ class PaymentController extends Controller
 
             DB::commit();
 
-            return redirect()->route('ticket.show', $ticket->ticket_code)
-                ->with('success', 'Payment initiated. Please complete payment within 12 hours.');
+            // Redirect ke halaman payment instructions
+            return redirect()->route('payment.pending', $ticket->booking_code)
+                ->with('success', 'Silakan selesaikan pembayaran dalam 24 jam');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Payment failed: ' . $e->getMessage());

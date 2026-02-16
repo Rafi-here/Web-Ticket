@@ -13,42 +13,81 @@
         prev() {
             this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length
         }
-    }" class="relative h-[400px] md:h-[500px] overflow-hidden">
-        <div class="relative h-full">
-            <template x-for="(slide, index) in slides" :key="index">
-                <div x-show="currentSlide === index" x-transition:enter="transition ease-out duration-700"
-                    x-transition:enter-start="opacity-0 scale-105" x-transition:enter-end="opacity-100 scale-100"
-                    class="absolute inset-0">
-                    <img :src="'/storage/' + slide.image" :alt="slide.title" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-white">
-                        <h2 class="text-3xl md:text-5xl font-bold mb-2" x-text="slide.title"></h2>
-                        <p class="text-lg md:text-xl opacity-90" x-text="slide.subtitle"></p>
+    }">
+        <div class="relative h-[500px] lg:h-[600px] overflow-hidden bg-gray-900">
+
+            <!-- SLIDER MENGGUNAKAN ALPINE.JS -->
+            <div x-data="bannerSlider()" x-init="init()" class="relative h-full">
+                <!-- Slides Container -->
+                <template x-if="slides.length > 0">
+                    <div class="relative h-full">
+                        <template x-for="(slide, index) in slides" :key="index">
+                            <div x-show="currentSlide === index" x-transition:enter="transition ease-out duration-700"
+                                x-transition:enter-start="opacity-0 scale-105"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-300"
+                                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute inset-0">
+                                <!-- Gambar dengan FIX PATH -->
+                                <img :src="getImageUrl(slide.image)" :alt="slide.title || 'Banner'"
+                                    class="w-full h-full object-cover" x-on:error.document="handleImageError($event, slide)">
+                                <!-- Overlay Gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent">
+                                </div>
+                                <!-- Text Content -->
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                                        <div class="max-w-2xl text-white">
+                                            <h2 x-text="slide.title || 'Selamat Datang'"
+                                                class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"></h2>
+                                            <p x-text="slide.description || 'Temukan film favoritmu di sini'"
+                                                class="text-lg md:text-xl text-gray-200 mb-8"></p>
+                                            <a x-show="slide.button_text && slide.button_url" :href="slide.button_url"
+                                                x-text="slide.button_text"
+                                                class="inline-block px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 transform hover:scale-105 shadow-lg"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Navigation Buttons -->
+                        <button @click="prevSlide"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-red-600 text-white rounded-full transition-all duration-300 z-20 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+
+                        <button @click="nextSlide"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-red-600 text-white rounded-full transition-all duration-300 z-20 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <!-- Indicators -->
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+                            <template x-for="(slide, index) in slides" :key="'dot-' + index">
+                                <button @click="currentSlide = index"
+                                    class="w-3 h-3 rounded-full transition-all duration-300"
+                                    :class="currentSlide === index ? 'bg-red-600 w-8' : 'bg-white/50 hover:bg-white'"></button>
+                            </template>
+                        </div>
                     </div>
-                </div>
-            </template>
-        </div>
+                </template>
 
-        <!-- Navigation Buttons -->
-        <button @click="prev"
-            class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-        </button>
-        <button @click="next"
-            class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-        </button>
-
-        <!-- Indicators -->
-        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            <template x-for="(slide, index) in slides" :key="index">
-                <button @click="currentSlide = index" class="w-2 h-2 rounded-full transition-all"
-                    :class="currentSlide === index ? 'bg-white w-8' : 'bg-white/50'"></button>
-            </template>
+                <!-- Fallback jika banner kosong -->
+                <template x-if="slides.length === 0">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <h2 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di TIX</h2>
+                            <p class="text-lg text-gray-300">Tempat booking tiket bioskop online</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
         </div>
     </div>
 
@@ -141,7 +180,8 @@
         </div>
     </section>
 
-    <!-- Promo Section -->
+    <!-- Promo Section - DIHAPUS karena variable $promos tidak ada -->
+    {{-- 
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h2 class="text-2xl md:text-3xl font-bold mb-8">Special Promos</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -163,6 +203,7 @@
             @endforeach
         </div>
     </section>
+    --}}
 
     <!-- Cinema List -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -191,6 +232,54 @@
 
 @push('scripts')
     <script>
+        // Data banners dari PHP ke JavaScript
+        const banners = @json($banners);
+
+        function bannerSlider() {
+            return {
+                slides: banners,
+                currentSlide: 0,
+                interval: null,
+
+                init() {
+                    if (this.slides.length > 1) {
+                        this.startAutoPlay();
+                    }
+                },
+
+                startAutoPlay() {
+                    this.interval = setInterval(() => {
+                        this.nextSlide();
+                    }, 5000);
+                },
+
+                stopAutoPlay() {
+                    clearInterval(this.interval);
+                },
+
+                nextSlide() {
+                    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+                },
+
+                prevSlide() {
+                    this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+                },
+
+                getImageUrl(path) {
+                    if (!path) return '{{ asset('images/default-banner.jpg') }}';
+                    path = path.replace(/^public\//, '');
+                    if (path.startsWith('storage/')) {
+                        return '{{ asset('') }}' + path;
+                    }
+                    return '{{ asset('storage/') }}' + '/' + path;
+                },
+
+                handleImageError(event, slide) {
+                    event.target.src = '{{ asset('images/default-banner.jpg') }}';
+                }
+            }
+        }
+
         function toggleWishlist(filmId) {
             fetch(`/wishlist/add/${filmId}`, {
                     method: 'POST',
@@ -202,7 +291,6 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Show toast notification
                         alert(data.message);
                     }
                 });

@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/Auth/AuthenticatedSessionController.php
 
 namespace App\Http\Controllers\Auth;
 
@@ -28,7 +29,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        // 🔥 CEK ROLE USER
+        if ($user->isAdmin()) {
+            // Jika admin, redirect ke admin dashboard
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
+        // Jika user biasa, redirect ke home
+        return redirect()->intended(route('home'));
     }
 
     /**

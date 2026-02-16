@@ -3,37 +3,95 @@
 @section('title', '404 - Page Not Found')
 
 @section('content')
-    <div class="min-h-[60vh] flex items-center justify-center px-4">
-        <div class="text-center">
-            <h1 class="text-9xl font-bold text-gray-300 dark:text-gray-600">404</h1>
-            <div class="mt-8">
-                <svg class="mx-auto h-24 w-24 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <h2 class="mt-4 text-2xl font-semibold">Page Not Found</h2>
-                <p class="mt-2 text-gray-500 dark:text-gray-400">The page you're looking for doesn't exist or has been
-                    moved.</p>
-                <div class="mt-6 space-x-4">
-                    <a href="{{ route('home') }}"
-                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                            </path>
-                        </svg>
-                        Home
-                    </a>
-                    <a href="javascript:history.back()"
-                        class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        Go Back
-                    </a>
+<style>
+    @keyframes rocketFly {
+        0% { transform: translateY(40px) translateX(-20px) rotate(-8deg); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-40px) translateX(20px) rotate(8deg); }
+    }
+
+    @keyframes flame {
+        0%,100% { transform: scaleY(1); opacity: .9; }
+        50% { transform: scaleY(1.4); opacity: .5; }
+    }
+
+    @keyframes starsMove {
+        from { transform: translateY(0); }
+        to { transform: translateY(-200px); }
+    }
+
+    .rocket-anim {
+        animation: rocketFly 3s ease-in-out infinite alternate;
+    }
+
+    .flame-anim {
+        animation: flame .4s ease-in-out infinite;
+        transform-origin: top;
+    }
+
+    .stars {
+        animation: starsMove 20s linear infinite;
+    }
+</style>
+
+<div class="relative min-h-[70vh] flex items-center justify-center px-4 overflow-hidden">
+
+    {{-- ⭐ Background Stars --}}
+    <div class="absolute inset-0 opacity-20 stars">
+        <div class="text-white text-xs leading-6 whitespace-pre">
+*     *        *       *       *
+    *       *      *       *
+*       *       *       *
+        </div>
+    </div>
+
+    <div class="text-center relative z-10">
+
+        {{-- 🚀 Rocket --}}
+        <div class="flex justify-center mb-6 rocket-anim">
+            <div class="relative">
+
+                {{-- Rocket Body --}}
+                <div class="w-16 h-24 bg-white rounded-t-full rounded-b-lg shadow-lg border border-gray-300"></div>
+
+                {{-- Window --}}
+                <div class="absolute top-6 left-1/2 -translate-x-1/2 w-6 h-6 bg-blue-400 rounded-full border-2 border-white"></div>
+
+                {{-- Wings --}}
+                <div class="absolute bottom-4 -left-4 w-6 h-8 bg-red-500 rounded"></div>
+                <div class="absolute bottom-4 -right-4 w-6 h-8 bg-red-500 rounded"></div>
+
+                {{-- Flame --}}
+                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 flame-anim">
+                    <div class="w-4 h-8 bg-gradient-to-b from-yellow-300 via-orange-500 to-red-600 rounded-b-full"></div>
                 </div>
             </div>
         </div>
+
+        {{-- 404 Text --}}
+        <h1 class="text-8xl font-extrabold text-gray-300 dark:text-gray-600 tracking-widest">
+            404
+        </h1>
+
+        <h2 class="mt-4 text-2xl font-semibold">Oops — Halaman Hilang di Luar Angkasa</h2>
+
+        <p class="mt-2 text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+            Sepertinya halaman yang kamu cari sudah terbang entah ke galaksi mana nih. Ayo kembali aja
+        </p>
+
+        {{-- Buttons --}}
+        <div class="mt-8 space-x-4">
+            <a href="{{ route('home') }}"
+               class="inline-flex items-center px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-lg hover:scale-105">
+                Home
+            </a>
+
+            <a href="javascript:history.back()"
+               class="inline-flex items-center px-5 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition shadow-lg hover:scale-105">
+                Go Back
+            </a>
+        </div>
+
     </div>
+</div>
 @endsection
