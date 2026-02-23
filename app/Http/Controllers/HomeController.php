@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Film;
+use App\Models\Event;
 use App\Models\Banner;
-use App\Models\Cinema;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,7 +12,7 @@ class HomeController extends Controller
     {
         // Ambil banner aktif
         $banners = Banner::where('is_active', true)
-            ->latest()
+            ->orderBy('order')
             ->get();
 
         // Format path banner
@@ -26,69 +24,85 @@ class HomeController extends Controller
             return $banner;
         });
 
-        // Ambil film now playing
-        $nowPlaying = Film::where('status', 'now_playing')
-            ->latest()
+        // Ambil event yang akan datang (upcoming)
+        $upcomingEvents = Event::with('ticketCategories')
+            ->where('status', 'upcoming')
+            ->where('event_date', '>=', now())
+            ->orderBy('event_date')
             ->take(8)
             ->get();
 
-        // 🔥 TAMBAHKAN: Ambil film coming soon
-        $comingSoon = Film::where('status', 'coming_soon')
-            ->orWhere(function ($query) {
-                $query->where('release_date', '>', now())
-                    ->where('status', '!=', 'now_playing');
-            })
-            ->latest()
-            ->take(10)
-            ->get();
-
-        // Ambil cinema (tanpa filter is_active)
-        $cinemas = Cinema::take(6)->get();
-
-        return view('home', compact(
-            'banners',
-            'nowPlaying',
-            'comingSoon',  // 🔥 DITAMBAHKAN
-            'cinemas'
-        ));
-    }
-
-    public function film($slug)
-    {
-        $film = Film::with(['category', 'showtimes.cinema'])
-            ->where('slug', $slug)
-            ->firstOrFail();
-
-        $relatedFilms = Film::where('category_id', $film->category_id)
-            ->where('id', '!=', $film->id)
-            ->where('status', 'now_playing')
+        // Ambil event featured (populer/unggulan)
+        $featuredEvents = Event::with('ticketCategories')
+            ->where('status', 'upcoming')
+            ->where('event_date', '>=', now())
+            ->inRandomOrder()
             ->take(4)
             ->get();
 
-        return view('film-detail', compact('film', 'relatedFilms'));
+        // Ambil event bulan ini
+        $thisMonthEvents = Event::with('ticketCategories')
+            ->where('status', 'upcoming')
+            ->whereMonth('event_date', now()->month)
+            ->whereYear('event_date', now()->year)
+            ->orderBy('event_date')
+            ->take(6)
+            ->get();
+
+        // Ambil kategori unik untuk filter
+        $categories = Event::distinct()->pluck('category');
+
+        return view('home', compact(
+            'banners',
+            'upcomingEvents',
+            'featuredEvents',
+            'thisMonthEvents',
+            'categories'
+        ));
     }
 
-    public function wishlist()
+    public function event($slug)
     {
-        $wishlists = auth()->user()->wishlists()->with('film')->get();
-        return view('wishlist', compact('wishlists'));
+        $event = Event::with(['ticketCategories'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $relatedEvents = Event::where('category', $event->category)
+            ->where('id', '!=', $event->id)
+            ->where('status', 'upcoming')
+            ->where('event_date', '>=', now())
+            ->take(4)
+            ->get();
+
+        return view('events.show', compact('event', 'relatedEvents'));
     }
 
-    public function addToWishlist(Request $request, $filmId)
+    public function events(Request $request)
     {
-        $user = auth()->user();
+        $query = Event::with('ticketCategories')
+            ->where('status', 'upcoming')
+            ->where('event_date', '>=', now());
 
-        if (!$user->wishlists()->where('film_id', $filmId)->exists()) {
-            $user->wishlists()->create(['film_id' => $filmId]);
-            return response()->json(['success' => true, 'message' => 'Added to wishlist']);
+        // Filter by category
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category', $request->category);
         }
 
-        return response()->json(['success' => false, 'message' => 'Already in wishlist']);
-    }
+        // Filter by city
+        if ($request->has('city') && $request->city != '') {
+            $query->where('city', $request->city);
+        }
 
-    public function removeFromWishlist($filmId)
-    {
-        auth()->user()->wishlists()->where('film_id', $filmId)->delete();
-        return response()->json(['success' => true, 'message' => 'Removed from wishlist']);
+        // Search by title
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $events = $query->orderBy('event_date')->paginate(12);
+        
+        $categories = Event::distinct()->pluck('category');
+        $cities = Event::distinct()->pluck('city');
+
+        return view('events.index', compact('events', 'categories', 'cities'));
     }
 }

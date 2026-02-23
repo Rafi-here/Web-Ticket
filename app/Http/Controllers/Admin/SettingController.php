@@ -78,6 +78,33 @@ class SettingController extends Controller
             ->with('success', 'Settings updated successfully');
     }
 
+    public function whatsapp()
+    {
+        $settings = [
+            'whatsapp_number' => Setting::get('whatsapp_number', '628123456789'),
+            'whatsapp_message_template' => Setting::get('whatsapp_message_template', ''),
+            'whatsapp_enabled' => Setting::get('whatsapp_enabled', 'true'),
+        ];
+
+        return view('admin.settings.whatsapp', compact('settings'));
+    }
+
+    public function updateWhatsapp(Request $request)
+    {
+        $request->validate([
+            'whatsapp_number' => 'required|string',
+            'whatsapp_message_template' => 'required|string',
+            'whatsapp_enabled' => 'boolean',
+        ]);
+
+        Setting::set('whatsapp_number', $request->whatsapp_number, 'text');
+        Setting::set('whatsapp_message_template', $request->whatsapp_message_template, 'text');
+        Setting::set('whatsapp_enabled', $request->whatsapp_enabled ? 'true' : 'false', 'boolean');
+
+        return redirect()->route('admin.settings.whatsapp')
+            ->with('success', 'Pengaturan WhatsApp berhasil diperbarui.');
+    }
+
     public function clearCache()
     {
         Setting::clearCache();

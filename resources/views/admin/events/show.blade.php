@@ -8,7 +8,7 @@
             
             <!-- Header dengan Back Button -->
             <div class="mb-6">
-                <a href="{{ route('admin.showtimes.index') }}" 
+                <a href="{{ route('admin.events.index') }}" 
                    class="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -24,11 +24,11 @@
                         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Detail Jadwal Tayang</h1>
                         
                         <div class="flex space-x-2">
-                            <a href="{{ route('admin.showtimes.edit', $showtime->id) }}" 
+                            <a href="{{ route('admin.events.edit', $showtime->id) }}" 
                                class="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition">
                                 Edit
                             </a>
-                            <form action="{{ route('admin.showtimes.destroy', $showtime->id) }}" 
+                            <form action="{{ route('admin.events.destroy', $showtime->id) }}" 
                                   method="POST" 
                                   onsubmit="return confirm('Hapus jadwal ini?')">
                                 @csrf

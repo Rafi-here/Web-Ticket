@@ -61,10 +61,6 @@
                     </x-nav-link>
 
                     @auth
-                        <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
-                            {{ __('Wishlist') }}
-                        </x-nav-link>
-
                         <x-nav-link :href="route('user.tickets')" :active="request()->routeIs('user.tickets')">
                             {{ __('My Tickets') }}
                         </x-nav-link>
@@ -171,18 +167,6 @@
                                 </div>
                             </a>
 
-                            <a href="{{ route('wishlist') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
-                                <div class="flex items-center">
-                                    <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
-                                    Wishlist
-                                </div>
-                            </a>
-
                             @if (Auth::user()->isAdmin())
                                 <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
                                 <a href="{{ route('admin.dashboard') }}"
@@ -263,9 +247,6 @@
             </x-responsive-nav-link>
 
             @auth
-                <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
-                    {{ __('Wishlist') }}
-                </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('user.tickets')" :active="request()->routeIs('user.tickets')">
                     {{ __('My Tickets') }}
@@ -288,10 +269,6 @@
 
                     <x-responsive-nav-link :href="route('user.profile')">
                         {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
-                    <x-responsive-nav-link :href="route('wishlist')">
-                        {{ __('Wishlist') }}
                     </x-responsive-nav-link>
 
                     @if (Auth::user()->isAdmin())

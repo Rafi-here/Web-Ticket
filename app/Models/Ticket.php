@@ -57,14 +57,24 @@ class Ticket extends Model
         return $this->hasOne(Payment::class);
     }
 
-    public function film()
+    public function event()
     {
-        return $this->hasOneThrough(Film::class, Showtime::class, 'id', 'id', 'showtime_id', 'film_id');
+        return $this->belongsTo(Event::class);
     }
 
-    public function cinema()
+    //public function film()
+    //{
+    //    return $this->hasOneThrough(Film::class, Showtime::class, 'id', 'id', 'showtime_id', 'film_id');
+    //}
+
+    //public function cinema()
+    //{
+    //    return $this->hasOneThrough(Cinema::class, Showtime::class, 'id', 'id', 'showtime_id', 'cinema_id');
+    //}
+
+    public function getBookingCodeAttribute()
     {
-        return $this->hasOneThrough(Cinema::class, Showtime::class, 'id', 'id', 'showtime_id', 'cinema_id');
+        return $this->ticket_code;
     }
 
     public function isExpired()
@@ -126,5 +136,13 @@ class Ticket extends Model
     public function scopeUserTickets($query, $userId)
     {
         return $query->where('user_id', $userId);
+    }
+    public function getEventNameAttribute()
+    {
+        if ($this->ticket_details) {
+            $details = json_decode($this->ticket_details, true);
+            return $details[0]['event_name'] ?? 'Event';
+        }
+        return 'Event Musik';
     }
 }
