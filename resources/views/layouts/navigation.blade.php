@@ -27,19 +27,19 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        @if ($settings['logo_type'] === 'image' && $settings['logo_image'])
+                        @if ($settings['logo_type'] === 'image' && !empty($settings['logo_image']))
                             <img src="{{ Storage::url($settings['logo_image']) }}" alt="{{ config('app.name') }}"
-                                class="block h-10 w-auto">
+                                class="block h-10 w-auto object-contain">
                         @else
                             <div class="flex items-center">
                                 <div
-                                    class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-2">
+                                    class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-2 shadow-lg">
                                     <span
-                                        class="text-white font-bold text-lg">{{ substr($settings['logo_text'], 0, 1) }}</span>
+                                        class="text-white font-bold text-lg">{{ substr($settings['logo_text'] ?? 'T', 0, 1) }}</span>
                                 </div>
                                 <span
                                     class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                    {{ $settings['logo_text'] }}
+                                    {{ $settings['logo_text'] ?? 'TIX' }}
                                 </span>
                             </div>
                         @endif
@@ -60,11 +60,11 @@
                         {{ __('Contact') }}
                     </x-nav-link>
 
-                    @auth
+                    {{--@auth
                         <x-nav-link :href="route('user.tickets')" :active="request()->routeIs('user.tickets')">
                             {{ __('My Tickets') }}
                         </x-nav-link>
-                    @endauth
+                    @endauth--}}
                 </div>
             </div>
 
@@ -143,7 +143,7 @@
                             </div>
 
                             <!-- Menu Items -->
-                            <a href="{{ route('user.tickets') }}"
+                            {{--<a href="{{ route('user.tickets') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
                                 <div class="flex items-center">
                                     <svg class="w-4 h-4 mr-3 text-gray-500" fill="none" stroke="currentColor"
@@ -153,7 +153,7 @@
                                     </svg>
                                     My Tickets
                                 </div>
-                            </a>
+                            </a>--}}
 
                             <a href="{{ route('user.profile') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150">
@@ -248,9 +248,9 @@
 
             @auth
 
-                <x-responsive-nav-link :href="route('user.tickets')" :active="request()->routeIs('user.tickets')">
+                {{--<x-responsive-nav-link :href="route('user.tickets')" :active="request()->routeIs('user.tickets')">
                     {{ __('My Tickets') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link>--}}
             @endauth
         </div>
 
@@ -263,9 +263,9 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('user.tickets')">
+                    {{--<x-responsive-nav-link :href="route('user.tickets')">
                         {{ __('My Tickets') }}
-                    </x-responsive-nav-link>
+                    </x-responsive-nav-link>--}}
 
                     <x-responsive-nav-link :href="route('user.profile')">
                         {{ __('Profile') }}

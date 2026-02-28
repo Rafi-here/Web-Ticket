@@ -196,95 +196,112 @@ class EventController extends Controller
 
     public function processWhatsAppOrder(Request $request)
     {
-        // Ubah validasi dari 'json' menjadi 'array'
-        $request->validate([
-            'event_id' => 'required|exists:events,id',
-            'tickets' => 'required|array', // Perbaikan: dari 'json' ke 'array'
-            'total_price' => 'required|numeric',
-            'quantity' => 'required|integer|min:1',
-        ]);
+        // Log untuk debugging
+        \Log::info('WhatsApp order received', ['user_id' => auth()->id()]);
 
         try {
+            // Validasi request
+            $request->validate([
+                'event_id' => 'required|exists:events,id',
+                'tickets' => 'required|array',
+                'total_price' => 'required|numeric',
+                'quantity' => 'required|integer|min:1',
+            ]);
+
+            // Ambil data
             $event = Event::findOrFail($request->event_id);
-            $tickets = $request->tickets; // Langsung pakai array, tidak perlu json_decode
+            $tickets = $request->tickets;
             $user = auth()->user();
 
-            // Log untuk debugging
-            \Log::info('WhatsApp Order:', [
-                'event' => $event->title,
+            // Cek apakah user login
+            if (!$user) {
+                \Log::error('User not authenticated');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Silakan login terlebih dahulu'
+                ], 401);
+            }
+
+            // Log data yang diproses
+            \Log::info('Processing WhatsApp order', [
                 'user' => $user->email,
+                'event' => $event->title,
                 'tickets' => $tickets
             ]);
 
-            // Generate ticket details text
+            // Buat detail tiket untuk pesan
             $ticketDetails = "";
             foreach ($tickets as $item) {
-                $ticketDetails .= "- {$item['category']}: {$item['quantity']} tiket x Rp " . number_format($item['price'], 0, ',', '.') . "\n";
+                $ticketDetails .= "- {$item['category']}: {$item['quantity']} tiket x Rp " .
+                    number_format($item['price'], 0, ',', '.') . "\n";
             }
 
-            // Get template from settings (dengan default template)
-            $template = Setting::get(
-                'whatsapp_message_template',
-                "Halo, saya ingin memesan tiket untuk event *{event_title}*\n\n" .
-                    "Detail Pemesanan:\n" .
-                    "- Nama: {name}\n" .
-                    "- Email: {email}\n" .
-                    "- Event: {event_title}\n" .
-                    "- Tanggal: {event_date}\n" .
-                    "- Jam: {event_time}\n" .
-                    "- Tiket:\n{ticket_details}\n" .
-                    "- Total: Rp {total_price}\n\n" .
-                    "Mohon konfirmasi ketersediaan tiket. Terima kasih."
-            );
+            // Template pesan WhatsApp
+            $template = "Halo, saya ingin memesan tiket untuk event *{event_title}*\n\n" .
+                "Detail Pemesanan:\n" .
+                "👤 Nama: {name}\n" .
+                "📧 Email: {email}\n" .
+                "🎫 Event: {event_title}\n" .
+                "📅 Tanggal: {event_date}\n" .
+                "⏰ Waktu: {event_time}\n" .
+                "🎟️ Tiket:\n{ticket_details}\n" .
+                "💰 Total: Rp {total_price}\n\n" .
+                "Mohon konfirmasi ketersediaan tiket. Terima kasih.";
 
-            // Replace variables
+            // Format tanggal
+            $eventDate = \Carbon\Carbon::parse($event->event_date)->format('l, d F Y');
+            $eventTime = \Carbon\Carbon::parse($event->event_time)->format('H:i') . ' WIB';
+
+            // Generate pesan
             $message = str_replace(
-                ['{name}', '{email}', '{event_title}', '{event_date}', '{event_time}', '{ticket_details}', '{total_price}', '{quantity}'],
+                ['{name}', '{email}', '{event_title}', '{event_date}', '{event_time}', '{ticket_details}', '{total_price}'],
                 [
                     $user->name,
                     $user->email,
                     $event->title,
-                    \Carbon\Carbon::parse($event->event_date)->format('l, d F Y'),
-                    \Carbon\Carbon::parse($event->event_time)->format('H:i') . ' WIB',
+                    $eventDate,
+                    $eventTime,
                     $ticketDetails,
-                    'Rp ' . number_format($request->total_price, 0, ',', '.'),
-                    $request->quantity
+                    'Rp ' . number_format($request->total_price, 0, ',', '.')
                 ],
                 $template
             );
 
-            // Clean WhatsApp number
-            $whatsappNumber = Setting::get('whatsapp_number', '628123456789');
+            // Ambil nomor WhatsApp dari settings
+            $whatsappNumber = \App\Models\Setting::get('whatsapp_number', '628123456789');
+
+            // Bersihkan nomor (hapus spasi, +, dll)
             $whatsappNumber = preg_replace('/[^0-9]/', '', $whatsappNumber);
 
-            // Ensure number starts with country code
-            if (substr($whatsappNumber, 0, 2) !== '62') {
-                if (substr($whatsappNumber, 0, 1) === '0') {
-                    $whatsappNumber = '62' . substr($whatsappNumber, 1);
-                } else {
-                    $whatsappNumber = '62' . $whatsappNumber;
-                }
+            // Pastikan format nomor internasional (62)
+            if (substr($whatsappNumber, 0, 1) === '0') {
+                $whatsappNumber = '62' . substr($whatsappNumber, 1);
+            } elseif (substr($whatsappNumber, 0, 2) !== '62') {
+                $whatsappNumber = '62' . $whatsappNumber;
             }
 
-            // Create WhatsApp URL
+            // Buat URL WhatsApp
             $encodedMessage = urlencode($message);
             $whatsappUrl = "https://wa.me/{$whatsappNumber}?text={$encodedMessage}";
+
+            \Log::info('WhatsApp URL generated', ['url' => $whatsappUrl]);
 
             return response()->json([
                 'success' => true,
                 'whatsapp_url' => $whatsappUrl,
-                'message' => 'Redirecting to WhatsApp...'
+                'message' => 'Mengarahkan ke WhatsApp...'
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation error', $e->errors());
             return response()->json([
                 'success' => false,
                 'message' => 'Validasi gagal: ' . json_encode($e->errors())
             ], 422);
         } catch (\Exception $e) {
-            \Log::error('WhatsApp Error: ' . $e->getMessage());
+            \Log::error('WhatsApp error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal memproses: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
         }
     }
