@@ -7,8 +7,7 @@
     <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">About TIX</h1>
-            <p class="text-xl max-w-3xl mx-auto opacity-90">Platform pemesanan tiket bioskop modern dengan pengalaman terbaik
-                untuk Anda</p>
+            <p class="text-xl max-w-3xl mx-auto opacity-90">Platform pemesanan tiket event musik terkemuka di Indonesia, menghubungkan Anda dengan pengalaman musik terbaik</p>
         </div>
     </section>
 
@@ -26,8 +25,9 @@
                     </div>
                     <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
                     <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        To provide the easiest and most enjoyable movie ticket booking experience,
-                        connecting movie lovers with the best cinematic experiences across Indonesia.
+                        Menyediakan platform pemesanan tiket event musik yang mudah, cepat, dan terpercaya. 
+                        Kami berkomitmen untuk menghadirkan pengalaman terbaik bagi pecinta musik dalam menemukan 
+                        dan menghadiri konser serta festival favorit mereka.
                     </p>
                 </div>
 
@@ -44,8 +44,9 @@
                     </div>
                     <h2 class="text-2xl font-bold mb-4">Our Vision</h2>
                     <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        To become Indonesia's leading digital cinema platform, revolutionizing how people
-                        discover, book, and enjoy movies.
+                        Menjadi platform digital terdepan untuk industri musik di Indonesia, 
+                        menciptakan ekosistem yang menghubungkan artis, promotor, dan penggemar musik 
+                        melalui teknologi inovatif dan pengalaman yang tak terlupakan.
                     </p>
                 </div>
             </div>
@@ -55,7 +56,7 @@
     <!-- Why Choose Us -->
     <section class="py-16 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Why Choose TIX?</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">Mengapa Memilih TIX?</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition">
@@ -67,9 +68,8 @@
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Easy Booking</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Book your tickets in just a few clicks with our intuitive
-                        interface</p>
+                    <h3 class="text-xl font-semibold mb-2">Pemesanan Mudah</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Pesan tiket event favorit Anda hanya dalam beberapa klik dengan antarmuka yang intuitif</p>
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition">
@@ -82,8 +82,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Secure Payment</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Multiple payment options with bank-level security</p>
+                    <h3 class="text-xl font-semibold mb-2">Pembayaran Aman</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Berbagai pilihan metode pembayaran dengan keamanan tingkat bank untuk transaksi Anda</p>
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition">
@@ -96,8 +96,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Best Deals</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Exclusive promotions and discounts for our members</p>
+                    <h3 class="text-xl font-semibold mb-2">Penawaran Terbaik</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Dapatkan promo eksklusif dan harga spesial untuk member setia TIX</p>
                 </div>
             </div>
         </div>
@@ -106,15 +106,15 @@
     <!-- How It Works -->
     <section class="py-16 bg-white dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">Cara Kerja TIX</h2>
 
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 <div class="flex-1 text-center">
                     <div
                         class="w-12 h-12 mx-auto bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
                         1</div>
-                    <h3 class="font-semibold mb-2">Choose Movie</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Browse now playing or coming soon movies</p>
+                    <h3 class="font-semibold mb-2">Pilih Event</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Jelajahi berbagai konser dan festival musik yang akan datang</p>
                 </div>
 
                 <div class="hidden md:block text-gray-400">
@@ -127,8 +127,8 @@
                     <div
                         class="w-12 h-12 mx-auto bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
                         2</div>
-                    <h3 class="font-semibold mb-2">Select Seats</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Pick your preferred seats and showtime</p>
+                    <h3 class="font-semibold mb-2">Pilih Kategori Tiket</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Tentukan jumlah tiket dan kategori yang diinginkan</p>
                 </div>
 
                 <div class="hidden md:block text-gray-400">
@@ -141,8 +141,8 @@
                     <div
                         class="w-12 h-12 mx-auto bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
                         3</div>
-                    <h3 class="font-semibold mb-2">Make Payment</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Choose payment method and complete</p>
+                    <h3 class="font-semibold mb-2">Lakukan Pembayaran</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Pilih metode pembayaran dan selesaikan transaksi</p>
                 </div>
 
                 <div class="hidden md:block text-gray-400">
@@ -155,8 +155,8 @@
                     <div
                         class="w-12 h-12 mx-auto bg-blue-600 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4">
                         4</div>
-                    <h3 class="font-semibold mb-2">Enjoy Movie</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Show your e-ticket at the cinema</p>
+                    <h3 class="font-semibold mb-2">Nikmati Event</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Tunjukkan e-ticket Anda di venue dan nikmati pengalaman musik</p>
                 </div>
             </div>
         </div>
@@ -167,16 +167,16 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div>
-                    <div class="text-4xl font-bold mb-2">50+</div>
-                    <div class="text-sm opacity-90">Cinemas Partner</div>
+                    <div class="text-4xl font-bold mb-2">100+</div>
+                    <div class="text-sm opacity-90">Event Terselenggara</div>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold mb-2">100K+</div>
-                    <div class="text-sm opacity-90">Happy Customers</div>
+                    <div class="text-4xl font-bold mb-2">50K+</div>
+                    <div class="text-sm opacity-90">Tiket Terjual</div>
                 </div>
                 <div>
-                    <div class="text-4xl font-bold mb-2">500+</div>
-                    <div class="text-sm opacity-90">Movies</div>
+                    <div class="text-4xl font-bold mb-2">25+</div>
+                    <div class="text-sm opacity-90">Promotor Event</div>
                 </div>
                 <div>
                     <div class="text-4xl font-bold mb-2">24/7</div>
@@ -189,26 +189,47 @@
     <!-- Team -->
     <section class="py-16 bg-white dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Our Team</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">Tim Kami</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
-                    <img src="https://via.placeholder.com/200x200" alt="Team Member"
-                        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&size=128&length=2&background=4F46E5&color=fff&bold=true" 
+                         alt="John Doe" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-lg">
                     <h3 class="font-semibold text-lg">John Doe</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Founder & CEO</p>
                 </div>
                 <div class="text-center">
-                    <img src="https://via.placeholder.com/200x200" alt="Team Member"
-                        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <img src="https://ui-avatars.com/api/?name=Jane+Smith&size=128&length=2&background=7C3AED&color=fff&bold=true" 
+                         alt="Jane Smith" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-lg">
                     <h3 class="font-semibold text-lg">Jane Smith</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">CTO</p>
                 </div>
                 <div class="text-center">
-                    <img src="https://via.placeholder.com/200x200" alt="Team Member"
-                        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <img src="https://ui-avatars.com/api/?name=Mike+Johnson&size=128&length=2&background=DB2777&color=fff&bold=true" 
+                         alt="Mike Johnson" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-lg">
                     <h3 class="font-semibold text-lg">Mike Johnson</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Head of Operations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section (Optional) -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Partner Kami</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+                <div class="grayscale hover:grayscale-0 transition">
+                    <img src="https://via.placeholder.com/150x50?text=Partner+1" alt="Partner 1" class="h-12 object-contain">
+                </div>
+                <div class="grayscale hover:grayscale-0 transition">
+                    <img src="https://via.placeholder.com/150x50?text=Partner+2" alt="Partner 2" class="h-12 object-contain">
+                </div>
+                <div class="grayscale hover:grayscale-0 transition">
+                    <img src="https://via.placeholder.com/150x50?text=Partner+3" alt="Partner 3" class="h-12 object-contain">
+                </div>
+                <div class="grayscale hover:grayscale-0 transition">
+                    <img src="https://via.placeholder.com/150x50?text=Partner+4" alt="Partner 4" class="h-12 object-contain">
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@
             <div class="p-4">
                 <a href="{{ route('admin.dashboard') }}"
                     class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    TIX Admin
+                    BPIX Dashboard
                 </a>
             </div>
 

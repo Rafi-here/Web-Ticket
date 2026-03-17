@@ -212,7 +212,7 @@
     @endif
 
     <!-- CTA Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!--<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">Siap untuk Pengalaman Musik Terbaik?</h2>
             <p class="text-lg mb-8 opacity-90">Dapatkan tiket event musik favoritmu sekarang juga!</p>
@@ -221,7 +221,7 @@
                 Jelajahi Event
             </a>
         </div>
-    </section>
+    </section>-->
 @endsection
 
 @push('scripts')

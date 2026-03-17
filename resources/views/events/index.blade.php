@@ -4,12 +4,20 @@
 
 @section('content')
     <!-- Header -->
-    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Daftar Event Musik</h1>
-            <p class="text-xl max-w-3xl mx-auto opacity-90">Temukan event musik favoritmu dan dapatkan tiketnya sekarang
-                juga!</p>
+    <section class="relative bg-cover bg-center text-white py-24"
+        style="background-image: url('{{ asset('images/banner-event.png') }}');">
+
+        <div class="absolute inset-0 bg-black/60"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                Daftar Event Musik
+            </h1>
+            <p class="text-xl max-w-3xl mx-auto opacity-90">
+                Temukan event musik favoritmu dan dapatkan tiketnya sekarang juga!
+            </p>
         </div>
+
     </section>
 
     <!-- Filter Section -->
@@ -178,24 +186,5 @@
                 </a>
             </div>
         @endif
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Dapatkan Info Event Terbaru</h2>
-                <p class="text-lg mb-8 opacity-90">Berlangganan newsletter kami untuk mendapatkan info event terbaru dan
-                    promo menarik</p>
-                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                    <input type="email" placeholder="Masukkan email Anda"
-                        class="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
-                    <button type="submit"
-                        class="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
-                        Berlangganan
-                    </button>
-                </form>
-            </div>
-        </div>
     </section>
 @endsection

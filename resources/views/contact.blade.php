@@ -4,11 +4,19 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="relative bg-cover bg-center text-white py-24"
+        style="background-image: url('{{ asset('images/banner-kontak.png') }}');">
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-            <p class="text-xl max-w-3xl mx-auto opacity-90">We're here to help! Reach out to us anytime</p>
+            <p class="text-xl max-w-3xl mx-auto opacity-90">
+                We're here to help! Reach out to us anytime
+            </p>
         </div>
+
     </section>
 
     <!-- Contact Info & Form -->
@@ -18,7 +26,7 @@
                 <!-- Contact Info -->
                 <div class="lg:col-span-1 space-y-6">
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                        <h2 class="text-xl font-semibold mb-4">Get in Touch</h2>
+                        <h2 class="text-xl font-semibold mb-4">Info Kontak</h2>
 
                         <div class="space-y-4">
                             <div class="flex items-start">
@@ -33,9 +41,9 @@
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-medium">Address</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Jl. Sudirman No. 123<br>Jakarta
-                                        12930, Indonesia</p>
+                                    <p class="text-sm font-medium">Alamat</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Jl. Baleendah No. 136<br>Bandung,
+                                        Indonesia</p>
                                 </div>
                             </div>
 
@@ -49,7 +57,7 @@
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-medium">Phone</p>
+                                    <p class="text-sm font-medium">Telepon</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">+62 21 1234 5678</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">+62 21 8765 4321</p>
                                 </div>
@@ -66,23 +74,8 @@
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm font-medium">Email</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">support@tix.com</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">help@tix.com</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0">
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium">Working Hours</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Monday - Friday: 09:00 - 21:00</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Saturday - Sunday: 10:00 - 18:00</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">support@bpix.com</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">help@bpix.com</p>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +85,7 @@
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
                         <h3 class="font-semibold mb-4">Follow Us</h3>
                         <div class="flex space-x-4">
-                            <a href="#"
+                            <a href="https://www.facebook.com/"
                                 class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path
@@ -100,7 +93,7 @@
                                     </path>
                                 </svg>
                             </a>
-                            <a href="#"
+                            <a href="https://www.instagram.com/"
                                 class="text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400 transition">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path
@@ -116,7 +109,7 @@
                                     </path>
                                 </svg>
                             </a>
-                            <a href="#"
+                            <a href="https://www.youtube.com/"
                                 class="text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                     <path
@@ -131,7 +124,7 @@
                 <!-- Contact Form -->
                 <div class="lg:col-span-2">
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-8">
-                        <h2 class="text-2xl font-semibold mb-6">Send Us a Message</h2>
+                        <h2 class="text-2xl font-semibold mb-6">Kirim Pesan</h2>
 
                         <form action="#" method="POST" id="contactForm" x-data="{ submitted: false }">
                             @csrf
@@ -139,16 +132,16 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div>
                                     <label for="name"
-                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your
-                                        Name</label>
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama
+                                        Lengkap</label>
                                     <input type="text" name="name" id="name" required
                                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white">
                                 </div>
 
                                 <div>
                                     <label for="email"
-                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email
-                                        Address</label>
+                                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Alamat
+                                        Email</label>
                                     <input type="email" name="email" id="email" required
                                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white">
                                 </div>
@@ -156,14 +149,14 @@
 
                             <div class="mb-6">
                                 <label for="subject"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Judul</label>
                                 <input type="text" name="subject" id="subject" required
                                     class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white">
                             </div>
 
                             <div class="mb-6">
                                 <label for="message"
-                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pesan</label>
                                 <textarea name="message" id="message" rows="6" required
                                     class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"></textarea>
                             </div>
@@ -171,8 +164,8 @@
                             <button type="submit"
                                 class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
                                 :disabled="submitted">
-                                <span x-show="!submitted">Send Message</span>
-                                <span x-show="submitted">Sending...</span>
+                                <span x-show="!submitted">Kirim Pesan</span>
+                                <span x-show="submitted">Mengirim...</span>
                             </button>
                         </form>
                     </div>
@@ -184,9 +177,9 @@
     <!-- Map -->
     <section class="h-96 bg-gray-200 dark:bg-gray-700">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.86556107528938!3d-6.175275393831518!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2ad6e1e0e9bcc8!2sNational%20Monument!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
-            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-        </iframe>
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d416.26626122099356!2d107.62113653779875!3d-6.984006072353585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1772243833666!5m2!1sid!2sid"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 
     @push('scripts')
