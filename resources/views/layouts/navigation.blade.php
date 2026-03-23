@@ -85,7 +85,7 @@
 
                 @auth
                     <!-- Cart / Ticket Icon -->
-                    <a href="{{ route('user.tickets') }}"
+                    {{--<a href="{{ route('user.tickets') }}"
                         class="relative p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -101,7 +101,7 @@
                                 {{ $ticketCount }}
                             </span>
                         @endif
-                    </a>
+                    </a>--}}
 
                     <!-- User Dropdown -->
                     <div class="relative" x-data="{ dropdownOpen: false }">
