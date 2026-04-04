@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">About TIX</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">About BPIX</h1>
             <p class="text-xl max-w-3xl mx-auto opacity-90">Platform pemesanan tiket event musik terkemuka di Indonesia, menghubungkan Anda dengan pengalaman musik terbaik</p>
         </div>
     </section>
@@ -56,7 +56,7 @@
     <!-- Why Choose Us -->
     <section class="py-16 bg-gray-50 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Mengapa Memilih TIX?</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">Mengapa Memilih BPIX?</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-lg hover:shadow-xl transition">
@@ -97,7 +97,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Penawaran Terbaik</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Dapatkan promo eksklusif dan harga spesial untuk member setia TIX</p>
+                    <p class="text-gray-600 dark:text-gray-400">Dapatkan promo eksklusif dan harga spesial untuk member setia BPIX</p>
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@
     <!-- How It Works -->
     <section class="py-16 bg-white dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Cara Kerja TIX</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">Cara Kerja BPIX</h2>
 
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 <div class="flex-1 text-center">

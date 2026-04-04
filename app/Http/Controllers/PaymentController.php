@@ -17,12 +17,10 @@ class PaymentController extends Controller
             ->where('user_id', auth()->id())
             ->firstOrFail();
 
-        // Auto expired check
         if ($ticket->isExpired()) {
             $ticket->markAsExpired();
         }
 
-        // Hitung sisa waktu
         $remainingSeconds = 0;
         if ($ticket->status === 'pending' && !$ticket->isExpired()) {
             $remainingSeconds = max(0, now()->diffInSeconds($ticket->expired_at, false));
@@ -38,12 +36,10 @@ class PaymentController extends Controller
             ->orWhere('ticket_code', $code)
             ->firstOrFail();
 
-        // Authorisasi
         if (auth()->user()->role !== 'admin' && $ticket->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
 
-        // Auto expired check
         if ($ticket->isExpired() && $ticket->status === 'pending') {
             $ticket->markAsExpired();
         }

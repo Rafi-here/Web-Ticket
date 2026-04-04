@@ -114,7 +114,7 @@ class Payment extends Model
                     'Transfer ke rekening:',
                     'Bank: ' . ($this->payment_details['bank'] ?? 'BCA'),
                     'No Rekening: ' . ($this->payment_details['account_number'] ?? '1234567890'),
-                    'Atas Nama: ' . ($this->payment_details['account_name'] ?? 'PT TIX Bioskop'),
+                    'Atas Nama: ' . ($this->payment_details['account_name'] ?? 'BPIX'),
                     'Jumlah: Rp ' . number_format($this->amount),
                 ]
             ],

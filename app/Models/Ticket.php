@@ -12,12 +12,14 @@ class Ticket extends Model
 
     protected $fillable = [
         'ticket_code',
+        'booking_code',
         'user_id',
-        'showtime_id',
-        'seats',
+        'event_id',
+        'ticket_details',
         'quantity',
         'total_price',
         'payment_method',
+        'provider',
         'status',
         'qr_code',
         'expired_at',
@@ -33,14 +35,21 @@ class Ticket extends Model
     ];
 
     protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($ticket) {
-            $ticket->ticket_code = 'TIX-' . strtoupper(Str::random(10)) . '-' . now()->format('Ymd');
-            $ticket->expired_at = now()->addHours(12);
-        });
-    }
+{
+    parent::boot();
+    
+    static::creating(function ($ticket) {
+        if (!$ticket->ticket_code) {
+            $ticket->ticket_code = 'BPIX-' . strtoupper(Str::random(8)) . now()->format('YmdHis');
+        }
+        if (!$ticket->booking_code) {
+            $ticket->booking_code = strtoupper(Str::random(10));
+        }
+        if (!$ticket->expired_at) {
+            $ticket->expired_at = now()->addHours(24);
+        }
+    });
+}
 
     public function user()
     {

@@ -71,7 +71,7 @@
                 <template x-if="slides.length === 0">
                     <div class="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800 flex items-center justify-center">
                         <div class="text-center text-white">
-                            <h2 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di TIX</h2>
+                            <h2 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di BPIX</h2>
                             <p class="text-lg text-gray-300">Tempat booking tiket event musik terbaik</p>
                         </div>
                     </div>

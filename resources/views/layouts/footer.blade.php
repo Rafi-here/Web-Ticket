@@ -29,7 +29,7 @@
                                 </div>
                                 <span
                                     class="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                    {{ $settings['logo_text'] ?? 'TIX' }}
+                                    {{ $settings['logo_text'] ?? 'BPIX' }}
                                 </span>
                             </div>
                         @endif
@@ -105,19 +105,19 @@
                 <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Support</h3>
                 <ul class="space-y-2">
                     <li>
-                        <a href="#"
+                        <a href="{{ route('faq') }}"
                             class="text-base text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">
                             FAQ
                         </a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{{ route('terms') }}"
                             class="text-base text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">
                             Terms of Service
                         </a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{{ route('privacy') }}"
                             class="text-base text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition">
                             Privacy Policy
                         </a>
@@ -197,7 +197,7 @@
         <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8">
             <div class="flex justify-center items-center">
                 <p class="text-base text-gray-400 text-center">
-                    &copy; {{ date('Y') }} {{ $settings['site_name'] ?? 'TIX' }}. All rights reserved.
+                    &copy; {{ date('Y') }} {{ $settings['site_name'] ?? 'BPIX' }}. All rights reserved.
                 </p>
             </div>
         </div>
