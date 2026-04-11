@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::table('tickets', function (Blueprint $table) {
             if (!Schema::hasColumn('tickets', 'booking_code')) {
-                $table->string('booking_code')->unique()->nullable()->after('ticket_code');
+                $table->string('booking_code')->unique()->after('id');
             }
             if (!Schema::hasColumn('tickets', 'expired_at')) {
                 $table->timestamp('expired_at')->nullable()->after('qr_code');
+            }
+            if (!Schema::hasColumn('tickets', 'paid_at')) {
+                $table->timestamp('paid_at')->nullable()->after('expired_at');
             }
         });
     }
