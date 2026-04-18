@@ -120,7 +120,7 @@
             <!-- Sidebar - Ticket Selection -->
             <div class="lg:col-span-1">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 sticky top-24">
-                    <h2 class="text-xl font-semibold mb-4">Pilih Tiket</h2>
+                    <h2 class="text-xl font-semibold mb-4">Pesan Tiket via WhatsApp</h2>
 
                     @php
                         $isEventAvailable =
@@ -129,22 +129,19 @@
                     @endphp
 
                     @if ($isEventAvailable && $event->ticketCategories->count() > 0)
-                        <!-- TAMBAHKAN novalidate pada form -->
-                        <form action="{{ route('event.order.process') }}" method="POST" id="order-form" novalidate>
+                        <!-- FORM SEDERHANA - HANYA WHATSAPP -->
+                        <div id="order-form">
                             @csrf
                             <input type="hidden" name="event_id" value="{{ $event->id }}">
                             <input type="hidden" name="tickets" id="tickets-input" value="[]">
                             <input type="hidden" name="total_price" id="total-price-input" value="0">
                             <input type="hidden" name="quantity" id="total-quantity-input" value="0">
-                            <input type="hidden" name="payment_method" id="payment-method-input" value="">
-                            <input type="hidden" name="provider" id="provider-input" value="">
-                            <input type="hidden" name="order_method" id="order-method" value="online">
 
                             <!-- Ticket Categories -->
                             <div class="space-y-4 mb-6">
                                 @foreach ($event->ticketCategories as $category)
                                     <div
-                                        class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-500 transition">
+                                        class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-green-500 transition">
                                         <div class="flex justify-between items-start mb-3">
                                             <div>
                                                 <h3 class="font-semibold text-lg">{{ $category->name }}</h3>
@@ -161,7 +158,7 @@
                                                 @endif
                                             </div>
                                             <div class="text-right">
-                                                <p class="text-lg font-bold text-blue-600 dark:text-blue-400">
+                                                <p class="text-lg font-bold text-green-600 dark:text-green-400">
                                                     Rp {{ number_format($category->price, 0, ',', '.') }}
                                                 </p>
                                                 <p class="text-xs text-gray-500 dark:text-gray-500 mt-1">
@@ -218,51 +215,13 @@
                                     </div>
                                     <div class="flex justify-between text-lg font-bold">
                                         <span class="text-gray-900 dark:text-white">Total:</span>
-                                        <span class="text-blue-600" id="total">Rp 0</span>
+                                        <span class="text-green-600" id="total">Rp 0</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Method Selector -->
+                            <!-- WhatsApp Info -->
                             <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                                    Metode Pemesanan
-                                </label>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <button type="button" id="method-online"
-                                        class="method-selector px-4 py-3 border-2 border-blue-600 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg font-medium transition-all">
-                                        <span class="block text-sm">💳 Pembayaran Online</span>
-                                    </button>
-                                    <button type="button" id="method-wa"
-                                        class="method-selector px-4 py-3 border-2 border-gray-300 dark:border-gray-600 hover:border-green-500 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all">
-                                        <span class="block text-sm">📱 Pesan via WhatsApp</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Payment Method Section (untuk online) -->
-                            <div id="payment-section" class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                                    Metode Pembayaran
-                                </label>
-                                <select id="payment-method-select"
-                                    class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2">
-                                    <option value="">Pilih Metode</option>
-                                    <option value="ewallet">E-Wallet</option>
-                                    <option value="virtual_account">Virtual Account</option>
-                                    <option value="qris">QRIS</option>
-                                    <option value="transfer_bank">Transfer Bank</option>
-                                </select>
-
-                                <select id="provider-select"
-                                    class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    disabled>
-                                    <option value="">Pilih Provider</option>
-                                </select>
-                            </div>
-
-                            <!-- WhatsApp Section (hidden by default) -->
-                            <div id="whatsapp-section" class="mb-6 hidden">
                                 <div
                                     class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                                     <div class="flex items-start">
@@ -275,8 +234,7 @@
                                             <h4 class="font-semibold text-green-800 dark:text-green-300">Pemesanan via
                                                 WhatsApp</h4>
                                             <p class="text-sm text-green-700 dark:text-green-400 mt-1">
-                                                Anda akan diarahkan ke WhatsApp untuk melakukan pemesanan. Admin akan
-                                                mengkonfirmasi ketersediaan tiket.
+                                                Klik tombol di bawah untuk memesan via WhatsApp.
                                             </p>
                                         </div>
                                     </div>
@@ -285,9 +243,9 @@
 
                             <!-- Submit Button -->
                             @auth
-                                <button type="submit" id="submit-btn" disabled
-                                    class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
-                                    Lanjut ke Pembayaran
+                                <button type="button" id="wa-direct-btn" disabled
+                                    class="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Pesan via WhatsApp
                                 </button>
                             @else
                                 <a href="{{ route('login') }}?redirect={{ urlencode(request()->fullUrl()) }}"
@@ -295,7 +253,7 @@
                                     Login untuk Membeli Tiket
                                 </a>
                             @endauth
-                        </form>
+                        </div>
                     @else
                         <div class="text-center py-8">
                             <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor"
@@ -356,19 +314,7 @@
             const subtotalSpan = document.getElementById('subtotal');
             const feeSpan = document.getElementById('fee');
             const totalSpan = document.getElementById('total');
-            const submitBtn = document.getElementById('submit-btn');
-            const paymentMethodSelect = document.getElementById('payment-method-select');
-            const providerSelect = document.getElementById('provider-select');
-            const paymentMethodInput = document.getElementById('payment-method-input');
-            const providerInput = document.getElementById('provider-input');
-            const orderForm = document.getElementById('order-form');
-
-            // Elements for method selector
-            const methodOnline = document.getElementById('method-online');
-            const methodWA = document.getElementById('method-wa');
-            const paymentSection = document.getElementById('payment-section');
-            const waSection = document.getElementById('whatsapp-section');
-            const orderMethod = document.getElementById('order-method');
+            const waButton = document.getElementById('wa-direct-btn');
 
             // Fungsi untuk menghitung total
             function calculateTotal() {
@@ -408,37 +354,8 @@
                 totalPriceInput.value = total;
                 totalQuantityInput.value = totalQty;
 
-                updateSubmitButton();
-
-                console.log('💰 Total dihitung:', {
-                    subtotal,
-                    fee,
-                    total,
-                    totalQty
-                });
-            }
-
-            // Fungsi update button
-            function updateSubmitButton() {
-                const totalQty = parseInt(totalQuantityInput.value) || 0;
-                const method = orderMethod.value;
-
-                let canSubmit = totalQty > 0;
-
-                if (method === 'online') {
-                    const metodeDipilih = paymentMethodSelect && paymentMethodSelect.value !== '';
-                    const providerDipilih = providerSelect && providerSelect.value !== '';
-                    canSubmit = canSubmit && metodeDipilih && providerDipilih;
-                }
-
-                submitBtn.disabled = !canSubmit;
-                console.log('🔘 Submit button status:', {
-                    canSubmit,
-                    method,
-                    totalQty,
-                    metodeDipilih: paymentMethodSelect?.value,
-                    providerDipilih: providerSelect?.value
-                });
+                // Enable/disable WhatsApp button
+                waButton.disabled = totalQty === 0;
             }
 
             // Event listener untuk tombol +/- 
@@ -465,230 +382,86 @@
                 });
             });
 
-            // Method selector handlers
-            if (methodOnline && methodWA) {
-                methodOnline.addEventListener('click', function() {
-                    console.log('🔘 Online method dipilih');
-                    methodOnline.classList.remove('border-gray-300', 'hover:border-green-500');
-                    methodOnline.classList.add('border-blue-600', 'bg-blue-50', 'dark:bg-blue-900/20',
-                        'text-blue-700');
-
-                    methodWA.classList.remove('border-blue-600', 'bg-blue-50', 'dark:bg-blue-900/20',
-                        'text-blue-700');
-                    methodWA.classList.add('border-gray-300', 'hover:border-green-500');
-
-                    paymentSection.classList.remove('hidden');
-                    waSection.classList.add('hidden');
-                    orderMethod.value = 'online';
-
-                    // Hapus disabled dari selects online
-                    paymentMethodSelect.disabled = false;
-                    providerSelect.disabled = false;
-
-                    updateSubmitButton();
-                });
-
-                methodWA.addEventListener('click', function() {
-                    console.log('🔘 WhatsApp method dipilih');
-                    methodWA.classList.remove('border-gray-300', 'hover:border-green-500');
-                    methodWA.classList.add('border-green-600', 'bg-green-50', 'dark:bg-green-900/20',
-                        'text-green-700');
-
-                    methodOnline.classList.remove('border-blue-600', 'bg-blue-50', 'dark:bg-blue-900/20',
-                        'text-blue-700');
-                    methodOnline.classList.add('border-gray-300', 'hover:border-blue-500');
-
-                    paymentSection.classList.add('hidden');
-                    waSection.classList.remove('hidden');
-                    orderMethod.value = 'wa';
-
-                    // Disable selects online
-                    paymentMethodSelect.disabled = true;
-                    providerSelect.disabled = true;
-
-                    updateSubmitButton();
-                });
-            }
-
-            // Payment method handlers
-            if (paymentMethodSelect) {
-                paymentMethodSelect.addEventListener('change', function() {
-                    const method = this.value;
-                    console.log('💰 Metode pembayaran dipilih:', method);
-
-                    providerSelect.innerHTML = '<option value="">Pilih Provider</option>';
-
-                    if (method) {
-                        providerSelect.disabled = false;
-
-                        const providers = {
-                            'ewallet': ['gopay', 'ovo', 'dana'],
-                            'virtual_account': ['bca', 'mandiri', 'bri'],
-                            'qris': ['qris'],
-                            'transfer_bank': ['bca', 'mandiri', 'bni']
-                        };
-
-                        if (providers[method]) {
-                            providers[method].forEach(p => {
-                                const option = document.createElement('option');
-                                option.value = p;
-                                option.textContent = p.toUpperCase();
-                                providerSelect.appendChild(option);
-                            });
-                        }
-
-                        paymentMethodInput.value = method;
-                    } else {
-                        providerSelect.disabled = true;
-                        paymentMethodInput.value = '';
-                    }
-
-                    updateSubmitButton();
-                });
-            }
-
-            if (providerSelect) {
-                providerSelect.addEventListener('change', function() {
-                    console.log('🏦 Provider dipilih:', this.value);
-                    providerInput.value = this.value;
-                    updateSubmitButton();
-                });
-            }
-
-            // ========== FORM SUBMISSION ==========
-            if (orderForm) {
-                orderForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    console.log('📤 Form submit triggered!');
-
+            // WhatsApp button handler - LANGSUNG REDIRECT
+            if (waButton) {
+                waButton.addEventListener('click', function() {
                     const totalQty = parseInt(totalQuantityInput.value) || 0;
-                    console.log('Total quantity:', totalQty);
 
                     if (totalQty === 0) {
                         alert('Silakan pilih minimal 1 tiket');
                         return;
                     }
 
-                    const method = orderMethod.value;
-                    console.log('Metode pemesanan:', method);
+                    // Disable button
+                    waButton.disabled = true;
+                    const originalText = waButton.textContent;
+                    waButton.textContent = 'Mengarahkan...';
 
-                    // ========== ONLINE PAYMENT ==========
-                    if (method === 'online') {
-                        console.log('Processing online payment...');
-                        console.log('Payment method value:', paymentMethodSelect.value);
-                        console.log('Provider value:', providerSelect.value);
+                    try {
+                        const tickets = JSON.parse(ticketsInput.value || '[]');
 
-                        if (!paymentMethodSelect.value) {
-                            alert('Silakan pilih metode pembayaran');
+                        if (!tickets || tickets.length === 0) {
+                            alert('Silakan pilih tiket terlebih dahulu');
+                            waButton.disabled = false;
+                            waButton.textContent = originalText;
                             return;
                         }
 
-                        if (!providerSelect.value) {
-                            alert('Silakan pilih provider');
-                            return;
-                        }
+                        // Buat URL WhatsApp langsung
+                        const phoneNumber =
+                            '{{ \App\Models\Setting::get('whatsapp_number', '628123456789') }}';
+                        const eventTitle = '{{ $event->title }}';
+                        const eventDate =
+                            '{{ \Carbon\Carbon::parse($event->event_date)->format('l, d F Y') }}';
+                        const eventTime =
+                            '{{ \Carbon\Carbon::parse($event->event_time)->format('H:i') }} WIB';
+                        const userName = '{{ auth()->user()->name ?? 'Customer' }}';
+                        const userEmail = '{{ auth()->user()->email ?? 'email@example.com' }}';
 
-                        // Update hidden inputs
-                        paymentMethodInput.value = paymentMethodSelect.value;
-                        providerInput.value = providerSelect.value;
-
-                        // Pastikan tickets terisi
-                        const tickets = [];
-                        document.querySelectorAll('.qty-input').forEach(input => {
-                            const qty = parseInt(input.value) || 0;
-                            if (qty > 0) {
-                                tickets.push({
-                                    category: input.dataset.category,
-                                    quantity: qty,
-                                    price: prices[input.dataset.category],
-                                    subtotal: qty * prices[input.dataset.category]
-                                });
-                            }
-                        });
-                        ticketsInput.value = JSON.stringify(tickets);
-
-                        console.log('✅ Data siap dikirim:', {
-                            event_id: {{ $event->id }},
-                            tickets: tickets,
-                            total_price: totalPriceInput.value,
-                            quantity: totalQuantityInput.value,
-                            payment_method: paymentMethodSelect.value,
-                            provider: providerSelect.value
+                        // Buat detail tiket
+                        let ticketDetails = '';
+                        tickets.forEach(item => {
+                            ticketDetails +=
+                                `- ${item.category}: ${item.quantity} tiket x Rp ${new Intl.NumberFormat('id-ID').format(item.price)}\n`;
                         });
 
-                        // Submit form (tanpa e.preventDefault() di akhir)
-                        orderForm.submit();
-                    }
+                        // Buat pesan
+                        const message = `Halo, saya ingin memesan tiket untuk event *${eventTitle}*
 
-                    // ========== WHATSAPP ORDER ==========
-                    else if (method === 'wa') {
-                        console.log('📱 Processing WhatsApp order...');
+Detail Pemesanan:
+👤 Nama: ${userName}
+📧 Email: ${userEmail}
+🎫 Event: ${eventTitle}
+📅 Tanggal: ${eventDate}
+⏰ Waktu: ${eventTime}
+🎟️ Tiket:
+${ticketDetails}
+💰 Total: Rp ${new Intl.NumberFormat('id-ID').format(totalPriceInput.value)}
 
-                        submitBtn.disabled = true;
-                        const originalText = submitBtn.textContent;
-                        submitBtn.textContent = 'Mengarahkan ke WhatsApp...';
+Mohon konfirmasi ketersediaan tiket. Terima kasih.`;
 
-                        try {
-                            const tickets = JSON.parse(ticketsInput.value || '[]');
+                        // Encode pesan untuk URL
+                        const encodedMessage = encodeURIComponent(message);
 
-                            if (!tickets || tickets.length === 0) {
-                                alert('Silakan pilih tiket terlebih dahulu');
-                                submitBtn.disabled = false;
-                                submitBtn.textContent = originalText;
-                                return;
-                            }
+                        // Buat URL WhatsApp
+                        const waUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
-                            const requestData = {
-                                event_id: {{ $event->id }},
-                                tickets: tickets,
-                                total_price: totalPriceInput.value,
-                                quantity: totalQuantityInput.value
-                            };
+                        console.log('Redirect ke WhatsApp:', waUrl);
 
-                            console.log('Mengirim data ke server:', requestData);
+                        // Redirect langsung
+                        window.location.href = waUrl;
 
-                            fetch('{{ route('event.order.whatsapp') }}', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                        'Accept': 'application/json'
-                                    },
-                                    body: JSON.stringify(requestData)
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log('Response dari server:', data);
-                                    submitBtn.disabled = false;
-                                    submitBtn.textContent = originalText;
-
-                                    if (data.success && data.whatsapp_url) {
-                                        window.location.href = data.whatsapp_url;
-                                    } else {
-                                        alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                    submitBtn.disabled = false;
-                                    submitBtn.textContent = originalText;
-                                    alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
-                                });
-
-                        } catch (error) {
-                            console.error('Error parsing data:', error);
-                            submitBtn.disabled = false;
-                            submitBtn.textContent = originalText;
-                            alert('Data tiket tidak valid');
-                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan: ' + error.message);
+                        waButton.disabled = false;
+                        waButton.textContent = originalText;
                     }
                 });
             }
 
             // Initial calculation
             calculateTotal();
-            console.log('✅ Script initialization complete');
         });
     </script>
 @endpush

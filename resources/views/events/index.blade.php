@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Header -->
-    <section class="relative bg-cover bg-center text-white py-24"
+    <section class="relative bg-cover bg-center text-white min-h-screen py-24"
         style="background-image: url('{{ asset('images/banner-event.png') }}');">
 
         <div class="absolute inset-0 bg-black/60"></div>
